@@ -68,7 +68,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     * @return string name of this type
     */
    static function getTypeName($nb = 0) {
-      return __('Entity');
+      return Entity::getTypeName(1);
    }
 
 
@@ -81,7 +81,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if ($item->getID() > -1) {
+      if ($item->fields['id'] > -1) {
          if (Session::haveRight("config", READ)) {
             return self::createTabEntry('Fusioninventory');
          }
@@ -100,7 +100,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-      if ($item->getID() > -1) {
+      if ($item->fields['id'] > -1) {
          $pmEntity = new PluginFusioninventoryEntity();
          $pmEntity->showForm($item->fields['id']);
          return true;
@@ -278,7 +278,4 @@ class PluginFusioninventoryEntity extends CommonDBTM {
    function post_getEmpty() {
       $this->fields['transfers_id_auto'] = -1;
    }
-
-
 }
-

@@ -130,7 +130,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
-         'name'      => __('Entity'),
+         'name'      => Entity::getTypeName(1),
       ];
 
       $tab[] = [
@@ -350,7 +350,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
       $a_methods               = PluginFusioninventoryStaticmisc::getmethods();
       $a_actioninitiontype     = [];
-      $a_actioninitiontype[''] = Dropdopwn::EMPTY_VALUE;
+      $a_actioninitiontype[''] = Dropdown::EMPTY_VALUE;
       $a_actioninitiontype['PluginFusioninventoryAgent']
          = PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
@@ -1376,7 +1376,4 @@ function new_subtype(id) {
       }
       return $result;
    }
-
-
 }
-

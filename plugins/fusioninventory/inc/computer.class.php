@@ -67,7 +67,8 @@ class PluginFusioninventoryComputer extends Computer {
       $plugin = new Plugin();
       if ($plugin->isInstalled('fields')) {
          if ($plugin->isActivated('fields')) {
-            include_once(GLPI_ROOT . "/plugins/fields/hook.php");
+            // Include Fields hook from correct installation folder (marketplace or plugins)
+            include_once(Plugin::GetPhpDir("fields") . "/hook.php");
             $options['fields_plugin'] = [
                'id'   => 'fields_plugin',
                'name' => __('Plugin fields')
@@ -112,16 +113,16 @@ class PluginFusioninventoryComputer extends Computer {
 
       if (!isset($_POST['custom_action'])) {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
-               = _x('button', 'Add');
+               = _x('button', 'Add to associated items of the group');
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
-               = _x('button', 'Delete permanently');
+               = _x('button', 'Remove from associated items of the group');
       } else {
          if ($_POST['custom_action'] == 'add_to_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']
-               = _x('button', 'Add');
+               = _x('button', 'Add to associated items of the group');
          } else if ($_POST['custom_action'] == 'delete_from_group') {
             $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem']
-               = _x('button', 'Delete permanently');
+               = _x('button', 'Remove from associated items of the group');
          }
       }
       return $actions;
@@ -150,8 +151,7 @@ class PluginFusioninventoryComputer extends Computer {
     * @param object $item item on which execute the code
     * @param array $ids list of ID on which execute the code
     */
-   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids) {
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
 
       $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
       switch ($ma->getAction()) {
@@ -211,6 +211,5 @@ class PluginFusioninventoryComputer extends Computer {
       }
       return parent::showMassiveActionsSubForm($ma);
    }
-
 
 }

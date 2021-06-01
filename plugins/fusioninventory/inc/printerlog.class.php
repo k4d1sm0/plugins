@@ -152,7 +152,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          'table'     => 'glpi_manufacturers',
          'field'     => 'name',
          'linkfield' => 'manufacturers_id',
-         'name'      => __('Manufacturer'),
+         'name'      => Manufacturer::getTypeName(1),
       ];
 
       $joinparams = [
@@ -388,7 +388,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       // display stats
       $stats = $this->stats($printers_id);
       if ($stats) {
-         $this->initForm($id, $options);
+         $this->initForm($printers_id, $options);
          $this->showFormHeader($options);
 
          echo "<tr class='tab_bg_1'>";
@@ -432,7 +432,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>".__('Date')." :</th>";
+      echo "<th>"._n('Date', 'Dates', 1)." :</th>";
       echo "<th>".__('Meter', 'fusioninventory')." :</th></tr>";
 
       for ($i=0; $i<$limit; $i++) {
@@ -554,7 +554,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-         $where .= " AND " .getDateRequest("`date`", $begin, $end);
+         $where .= " AND " .self::getDateRequest("`date`", $begin, $end);
       }
       $group = '';
       switch ($timeUnit) {
@@ -832,6 +832,18 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
    }
 
+   public static function getDateRequest($field, $begin, $end) {
+      $sql = '';
+      if (!empty($begin)) {
+         $sql .= " $field >= '$begin' ";
+      }
 
+      if (!empty($end)) {
+         if (!empty($sql)) {
+            $sql .= " AND ";
+         }
+         $sql .= " $field <= ADDDATE('$end' , INTERVAL 1 DAY) ";
+      }
+      return " (".$sql.") ";
+   }
 }
-

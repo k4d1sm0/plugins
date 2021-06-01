@@ -154,13 +154,13 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       $pfRulematchedlog = new self();
       if ($tabnum == '0') {
-         if ($item->getID() > 0) {
-            $pfRulematchedlog->showFormAgent($item->getID());
+         if ($item->fields['id'] > 0) {
+            $pfRulematchedlog->showFormAgent($item->fields['id']);
             return true;
          }
       } else if ($tabnum == '1') {
-         if ($item->getID() > 0) {
-            $pfRulematchedlog->showForm($item->getID(), $item->getType());
+         if ($item->fields['id'] > 0) {
+            $pfRulematchedlog->showForm($item->fields['id'], $item->getType());
 
             $itemtype = '';
             switch (get_class($item)) {
@@ -253,7 +253,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th>";
-      echo __('Date');
+      echo _n('Date', 'Dates', 1);
 
       echo "</th>";
       echo "<th>";
@@ -350,7 +350,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th>";
-      echo __('Date');
+      echo _n('Date', 'Dates', 1);
 
       echo "</th>";
       echo "<th>";
@@ -362,7 +362,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Item');
+      echo _n('Item', 'Items', 1);
 
       echo "</th>";
       echo "<th>";
@@ -404,7 +404,4 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       }
       echo "</table>";
    }
-
-
 }
-

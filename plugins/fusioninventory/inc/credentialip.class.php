@@ -159,7 +159,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
          'id'       => '2',
          'table'    => 'glpi_entities',
          'field'    => 'completename',
-         'name'     => __('Entity'),
+         'name'     => Entity::getTypeName(1),
          'datatype' => 'dropdown',
       ];
 
@@ -194,7 +194,4 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       //Fusioninventory menu
       PluginFusioninventoryMenu::displayMenu("mini");
    }
-
-
 }
-

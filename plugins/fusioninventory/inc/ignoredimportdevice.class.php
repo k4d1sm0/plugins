@@ -112,7 +112,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'id'            => '3',
          'table'         => $this->getTable(),
          'field'         => 'date',
-         'name'          => __('Date'),
+         'name'          => _n('Date', 'Dates', 1),
          'datatype'      => 'datetime',
          'massiveaction' => false,
       ];
@@ -130,7 +130,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          'id'            => '5',
          'table'         => 'glpi_entities',
          'field'         => 'completename',
-         'name'          => __('Entity'),
+         'name'          => Entity::getTypeName(1),
          'massiveaction' => false,
          'datatype'      => 'dropdown',
       ];
@@ -203,6 +203,4 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       return ['sort'  => 3,
                    'order' => 'DESC'];
    }
-
-
 }

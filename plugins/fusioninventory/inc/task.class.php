@@ -126,7 +126,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          'table'     => 'glpi_entities',
          'field'     => 'completename',
          'linkfield' => 'entities_id',
-         'name'      => __('Entity'),
+         'name'      => Entity::getTypeName(1),
          'datatype'  => 'dropdown',
       ];
 
@@ -179,7 +179,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * Purge elements linked to task when delete it
     *
     * @global object $DB
-    * @param array $param
+    * @param object $param
     */
    static function purgeTask($param) {
       global $DB;
@@ -1332,14 +1332,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   'task_id'  => $task_id,
                   'target_id'=> $target_id
                ];
-            } else {
-               $targets[$target_id]['agents'][$agent_id][] = [
-                  'agent_id'      => $agent_id,
-                  'link'          => Computer::getFormURLWithID($result['agent.computers_id']),
-                  'numstate'      => $result['state'],
-                  'state'         => $agent_state,
-                  'target_id'     => $target_id
-               ];
             }
          }
          if ($with_logs && count($runs_id) > 0) {
@@ -1918,7 +1910,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $rand = mt_rand();
             Dropdown::show('PluginFusioninventoryTask', [
                   'name'      => "tasks_id",
-                  'condition' => "is_active = 0",
+                  'condition' => ['is_active' => 0],
                   'toupdate'  => [
                         'value_fieldname' => "id",
                         'to_update'       => "dropdown_packages_id$rand",
